@@ -24,7 +24,7 @@ public class Program {
 		System.out.println("Entre o caminho do arquivo: ");
 		String path = sc.nextLine();
 
-		Set<Sale> salesList = new HashSet<Sale>();
+		Set<Sale> salesSet = new HashSet<Sale>();
 
 		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
 			String line = br.readLine();
@@ -36,14 +36,14 @@ public class Program {
 				String seller = fields[2];
 				Integer items = Integer.parseInt(fields[3]);
 				Double total = Double.parseDouble(fields[4]);
-				salesList.add(new Sale(month, year, seller, items, total));
+				salesSet.add(new Sale(month, year, seller, items, total));
 				line = br.readLine();
 			}
 
 			Predicate<Sale> predYear = (s) -> s.getYear().intValue() == 2016;
 			Comparator<Sale> comp = (s1, s2) -> s1.averagePrice().compareTo(s2.averagePrice());
 
-			List<Sale> collected = salesList.stream().sorted(comp.reversed()).filter(predYear).limit(5)
+			List<Sale> collected = salesSet.stream().sorted(comp.reversed()).filter(predYear).limit(5)
 					.collect(Collectors.toList());
 
 			Predicate<Sale> predSeller = (s) -> s.getSeller().equalsIgnoreCase("Logan");
@@ -51,7 +51,7 @@ public class Program {
 				return s.getMonth().intValue() == 1 || s.getMonth().intValue() == 7;
 			};
 
-			Double loganTotal = salesList.stream().filter(predSeller).filter(predMonth).map(s -> s.getTotal())
+			Double loganTotal = salesSet.stream().filter(predSeller).filter(predMonth).map(s -> s.getTotal())
 					.reduce(0.0, (x, y) -> x + y);
 
 			System.out.printf("%nCinco primeiras vendas de 2016 de maior preço médio");
