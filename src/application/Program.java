@@ -12,7 +12,7 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import model.Sale;
+import model.entities.Sale;
 
 public class Program {
 
